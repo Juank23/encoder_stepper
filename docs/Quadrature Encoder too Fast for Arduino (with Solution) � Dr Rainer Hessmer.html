@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<!-- saved from url=(0093)http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/ -->
+<html lang="en-US"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+	<link rel="pingback" href="http://www.hessmer.org/blog/xmlrpc.php">
+
+	<title>  Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer</title>
+	<!--[if lt IE 9]>
+	<script src="http://www.hessmer.org/blog/wp-content/themes/suffusion/scripts/html5.js" type="text/javascript"></script>
+	<![endif]-->
+<link rel="alternate" type="application/rss+xml" title="Dr Rainer Hessmer » Feed" href="http://www.hessmer.org/blog/feed/">
+<link rel="alternate" type="application/rss+xml" title="Dr Rainer Hessmer » Comments Feed" href="http://www.hessmer.org/blog/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Dr Rainer Hessmer » Quadrature Encoder too Fast for Arduino (with Solution) Comments Feed" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/feed/">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.hessmer.org\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.3.1"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/wp-emoji-release.min.js" type="text/javascript"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="suffusion-theme-css" href="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="suffusion-theme-skin-1-css" href="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/skin.css" type="text/css" media="all">
+<!--[if !IE]>--><link rel="stylesheet" id="suffusion-rounded-css" href="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/rounded-corners.css" type="text/css" media="all">
+<!--<![endif]-->
+<!--[if gt IE 8]><link rel='stylesheet' id='suffusion-rounded-css'  href='http://www.hessmer.org/blog/wp-content/themes/suffusion/rounded-corners.css?ver=4.4.7' type='text/css' media='all' />
+<![endif]-->
+<!--[if lt IE 8]><link rel='stylesheet' id='suffusion-ie-css'  href='http://www.hessmer.org/blog/wp-content/themes/suffusion/ie-fix.css?ver=4.4.7' type='text/css' media='all' />
+<![endif]-->
+<link rel="stylesheet" id="suffusion-generated-css" href="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/blog" type="text/css" media="all">
+<script type="text/javascript" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/jquery.js"></script>
+<script type="text/javascript" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/jquery-migrate.min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var Suffusion_JS = {"wrapper_width_type_page_template_1l_sidebar_php":"fixed","wrapper_max_width_page_template_1l_sidebar_php":"1200","wrapper_min_width_page_template_1l_sidebar_php":"600","wrapper_orig_width_page_template_1l_sidebar_php":"75","wrapper_width_type_page_template_1r_sidebar_php":"fixed","wrapper_max_width_page_template_1r_sidebar_php":"1200","wrapper_min_width_page_template_1r_sidebar_php":"600","wrapper_orig_width_page_template_1r_sidebar_php":"75","wrapper_width_type_page_template_1l1r_sidebar_php":"fixed","wrapper_max_width_page_template_1l1r_sidebar_php":"1200","wrapper_min_width_page_template_1l1r_sidebar_php":"600","wrapper_orig_width_page_template_1l1r_sidebar_php":"75","wrapper_width_type_page_template_2l_sidebars_php":"fixed","wrapper_max_width_page_template_2l_sidebars_php":"1200","wrapper_min_width_page_template_2l_sidebars_php":"600","wrapper_orig_width_page_template_2l_sidebars_php":"75","wrapper_width_type_page_template_2r_sidebars_php":"fixed","wrapper_max_width_page_template_2r_sidebars_php":"1200","wrapper_min_width_page_template_2r_sidebars_php":"600","wrapper_orig_width_page_template_2r_sidebars_php":"75","wrapper_width_type":"fixed","wrapper_max_width":"1200","wrapper_min_width":"600","wrapper_orig_width":"75","wrapper_width_type_page_template_no_sidebars_php":"fixed","wrapper_max_width_page_template_no_sidebars_php":"1200","wrapper_min_width_page_template_no_sidebars_php":"600","wrapper_orig_width_page_template_no_sidebars_php":"75","suf_featured_interval":"4000","suf_featured_transition_speed":"1000","suf_featured_fx":"fade","suf_featured_pause":"Pause","suf_featured_resume":"Resume","suf_featured_sync":"0","suf_featured_pager_style":"numbers","suf_nav_delay":"500","suf_nav_effect":"fade","suf_navt_delay":"500","suf_navt_effect":"fade","suf_jq_masonry_enabled":"disabled","suf_fix_aspect_ratio":"preserve","suf_show_drop_caps":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/suffusion.js"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.hessmer.org/blog/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.hessmer.org/blog/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Sending Data from Arduino to ROS" href="http://www.hessmer.org/blog/2010/11/21/sending-data-from-arduino-to-ros/">
+<link rel="next" title="ROS Indroduction Class with Ardros" href="http://www.hessmer.org/blog/2011/02/13/ros_introduction/">
+<link rel="canonical" href="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer.html">
+<link rel="shortlink" href="http://www.hessmer.org/blog/?p=68">
+<!-- Start Additional Feeds -->
+<!-- End Additional Feeds -->
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+<!-- location header -->
+<link rel="stylesheet" type="text/css" href="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/shCore.css"><link rel="stylesheet" type="text/css" href="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/shThemeDefault.css"><style type="text/css" id="syntaxhighlighteranchor"></style>
+</head>
+
+<body class="single single-post postid-68 single-format-standard light-theme-gray-1 suffusion-custom preset-1000px device-desktop">
+    				<div id="wrapper" class="fix">
+					<div id="header-container" class="custom-header fix">
+					<header id="header" class="fix">
+			<h2 class="blogtitle left"><a href="http://www.hessmer.org/blog">Dr Rainer Hessmer</a></h2>
+		<div class="description right">Robotics, Software, and more</div>
+    </header><!-- /header -->
+ 	<nav id="nav" class="tab fix">
+		<div class="col-control left">
+	<!-- right-header-widgets -->
+	<div id="right-header-widgets" class="warea">
+	
+<form method="get" class="searchform " action="http://www.hessmer.org/blog/">
+	<input type="text" name="s" class="searchfield" value="Search" onfocus="if (this.value == &#39;Search&#39;) {this.value = &#39;&#39;;}" onblur="if (this.value == &#39;&#39;) {this.value = &#39;Search&#39;;}">
+	<input type="submit" class="searchsubmit" value="" name="searchsubmit">
+</form>
+	</div>
+	<!-- /right-header-widgets -->
+		</div><!-- /col-control -->
+	</nav><!-- /nav -->
+			</div><!-- //#header-container -->
+			<div id="container" class="fix">
+				    <div id="main-col">
+		  	<div id="content">
+	<article class="post-68 post type-post status-publish format-standard hentry category-robotics tag-arduino tag-robotics category-2-id full-content meta-position-corners fix" id="post-68">
+<header class="post-header title-container fix">
+	<div class="title">
+		<h1 class="posttitle"><a href="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer.html" class="entry-title" rel="bookmark" title="Quadrature Encoder too Fast for Arduino (with Solution)">Quadrature Encoder too Fast for Arduino (with Solution)</a></h1>
+		<div class="postdata fix">
+					<span class="category"><span class="icon">&nbsp;</span><a href="http://www.hessmer.org/blog/category/robotics/" rel="category tag">Robotics</a></span>
+							<span class="comments"><span class="icon">&nbsp;</span><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#respond">Add comments</a></span>
+					</div><!-- /.postdata -->
+		</div><!-- /.title -->
+		<div class="date"><span class="month">Jan</span> <span class="day">30</span><span class="year">2011</span></div>
+	</header><!-- /.title-container -->
+	<span class="post-format-icon">&nbsp;</span><span class="updated" title="2011-01-30T16:02:09+00:00"></span>		<div class="entry-container fix">
+			<div class="entry fix">
+<p class="first-para">For my next robot project I am using Pittman Motors with 500 cnt/rev quadrature encoders mounted on the motor axle. Initially I used the same code that I described in my blog post <a href="http://www.hessmer.org/blog/2010/04/08/building-a-self-balancing-robot-%e2%80%93-motor-driver-and-wheel-encoder/">‘Building a Self-Balancing Robot: Motor Driver and Wheel Encoder’</a> for handling the encoder input. Everything worked fine when I turned the motors manually; the interrupts kicked in and the counters were correctly incremented / decremented. However, when I powered up the motors the Arduino program froze.</p>
+<p>Others suffered from the same experience (see e.g., <a href="http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1294725540">Missing counting encoder</a>). One suggested solution is the use of dedicated quadrature decoder chips like the <a href="http://www.usdigital.com/search/LS7266R1">LS7266R1</a>. More information about its usage in a robot project can be found in the thesis <a href="http://sub-zero.mit.edu/ewilhelm/thesis/Thesis.PDF">Design of a Wireless Control System for a Laboratory Planetary Rover</a> by Eric Jamesson Wilhelm.</p>
+<p>Fortunately no dedicated decoder hardware is necessary (at least in my case). It turns out that the Arduino function digitalRead() comes with a lot of overhead and is correspondingly slow. Both Jean-Claude Wippler (<a href="http://jeelabs.org/2010/01/06/pin-io-performance/">Pin I/O performance</a>) and Bill Porter (<a href="http://www.billporter.info/ready-set-oscillate-the-fastest-way-to-change-arduino-pins/">Ready, Set, Oscillate! The Fastest Way to Change Arduino Pins</a>) discuss the overhead and demonstrate how it can be avoided by directly reading from Atmel ports rather than going through the Arduino library, thus gaining a factor of about 50 in performance.</p>
+<p>While directly reading from controller ports certainly solves the issue, it forces you to become familiar with port maps and write code that is specific to a given controller (no simple porting from Arduino Uno to Mega, etc.). This problem has been beautifully addressed by jrraines’ <a href="http://code.google.com/p/digitalwritefast/">digitalwritefast</a> library (<a href="http://code.google.com/p/digitalwritefast/downloads/list">download</a>) which in turn is based on a suggestion from Paul Stoffregen (see <a href="http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1267553811/0">http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1267553811/0</a>).</p>
+<p>So, with the open source community to the rescue my quadrature encoder problem is now solved. Here is my new quadrature encoder code wrapped in a little test sketch:</p>
+<p>UPDATE: I incorporated Bill Porter’s feedback (see his comment for further detail) to further improve the performance of the code. Since the interrupt only fires on a rising change there is no need to read pin A; it’s value will always be ‘true’.&nbsp; Furthermore by using pre-processor directives #ifdef … #else … #endif the evaluation of an if statement in each interrupt handler during runtime can be avoided. Thanks, Bill!</p>
+<div><div id="highlighter_788056" class="syntaxhighlighter  cpp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div><div class="line number32 index31 alt1">32</div><div class="line number33 index32 alt2">33</div><div class="line number34 index33 alt1">34</div><div class="line number35 index34 alt2">35</div><div class="line number36 index35 alt1">36</div><div class="line number37 index36 alt2">37</div><div class="line number38 index37 alt1">38</div><div class="line number39 index38 alt2">39</div><div class="line number40 index39 alt1">40</div><div class="line number41 index40 alt2">41</div><div class="line number42 index41 alt1">42</div><div class="line number43 index42 alt2">43</div><div class="line number44 index43 alt1">44</div><div class="line number45 index44 alt2">45</div><div class="line number46 index45 alt1">46</div><div class="line number47 index46 alt2">47</div><div class="line number48 index47 alt1">48</div><div class="line number49 index48 alt2">49</div><div class="line number50 index49 alt1">50</div><div class="line number51 index50 alt2">51</div><div class="line number52 index51 alt1">52</div><div class="line number53 index52 alt2">53</div><div class="line number54 index53 alt1">54</div><div class="line number55 index54 alt2">55</div><div class="line number56 index55 alt1">56</div><div class="line number57 index56 alt2">57</div><div class="line number58 index57 alt1">58</div><div class="line number59 index58 alt2">59</div><div class="line number60 index59 alt1">60</div><div class="line number61 index60 alt2">61</div><div class="line number62 index61 alt1">62</div><div class="line number63 index62 alt2">63</div><div class="line number64 index63 alt1">64</div><div class="line number65 index64 alt2">65</div><div class="line number66 index65 alt1">66</div><div class="line number67 index66 alt2">67</div><div class="line number68 index67 alt1">68</div><div class="line number69 index68 alt2">69</div><div class="line number70 index69 alt1">70</div><div class="line number71 index70 alt2">71</div><div class="line number72 index71 alt1">72</div><div class="line number73 index72 alt2">73</div><div class="line number74 index73 alt1">74</div><div class="line number75 index74 alt2">75</div><div class="line number76 index75 alt1">76</div><div class="line number77 index76 alt2">77</div><div class="line number78 index77 alt1">78</div><div class="line number79 index78 alt2">79</div><div class="line number80 index79 alt1">80</div><div class="line number81 index80 alt2">81</div><div class="line number82 index81 alt1">82</div><div class="line number83 index82 alt2">83</div><div class="line number84 index83 alt1">84</div><div class="line number85 index84 alt2">85</div><div class="line number86 index85 alt1">86</div><div class="line number87 index86 alt2">87</div><div class="line number88 index87 alt1">88</div><div class="line number89 index88 alt2">89</div><div class="line number90 index89 alt1">90</div><div class="line number91 index90 alt2">91</div><div class="line number92 index91 alt1">92</div><div class="line number93 index92 alt2">93</div><div class="line number94 index93 alt1">94</div><div class="line number95 index94 alt2">95</div><div class="line number96 index95 alt1">96</div><div class="line number97 index96 alt2">97</div><div class="line number98 index97 alt1">98</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp preprocessor">#include "WProgram.h"</code></div><div class="line number2 index1 alt1"><code class="cpp preprocessor">#include &lt;Servo.h&gt;</code></div><div class="line number3 index2 alt2"><code class="cpp preprocessor">#include &lt;digitalWriteFast.h&gt;&nbsp; // library for high performance reads and writes by jrraines</code></div><div class="line number4 index3 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">// see <a href="http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1267553811/0">http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1267553811/0</a></code></div><div class="line number5 index4 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">// and <a href="http://code.google.com/p/digitalwritefast/">http://code.google.com/p/digitalwritefast/</a></code></div><div class="line number6 index5 alt1">&nbsp;</div><div class="line number7 index6 alt2"><code class="cpp comments">// It turns out that the regular digitalRead() calls are too slow and bring the arduino down when</code></div><div class="line number8 index7 alt1"><code class="cpp comments">// I use them in the interrupt routines while the motor runs at full speed creating more than</code></div><div class="line number9 index8 alt2"><code class="cpp comments">// 40000 encoder ticks per second per motor.</code></div><div class="line number10 index9 alt1">&nbsp;</div><div class="line number11 index10 alt2"><code class="cpp comments">// Quadrature encoders</code></div><div class="line number12 index11 alt1"><code class="cpp comments">// Left encoder</code></div><div class="line number13 index12 alt2"><code class="cpp preprocessor">#define c_LeftEncoderInterrupt 4</code></div><div class="line number14 index13 alt1"><code class="cpp preprocessor">#define c_LeftEncoderPinA 19</code></div><div class="line number15 index14 alt2"><code class="cpp preprocessor">#define c_LeftEncoderPinB 25</code></div><div class="line number16 index15 alt1"><code class="cpp preprocessor">#define LeftEncoderIsReversed</code></div><div class="line number17 index16 alt2"><code class="cpp keyword bold">volatile</code> <code class="cpp color1 bold">bool</code> <code class="cpp plain">_LeftEncoderBSet;</code></div><div class="line number18 index17 alt1"><code class="cpp keyword bold">volatile</code> <code class="cpp color1 bold">long</code> <code class="cpp plain">_LeftEncoderTicks = 0;</code></div><div class="line number19 index18 alt2">&nbsp;</div><div class="line number20 index19 alt1"><code class="cpp comments">// Right encoder</code></div><div class="line number21 index20 alt2"><code class="cpp preprocessor">#define c_RightEncoderInterrupt 5</code></div><div class="line number22 index21 alt1"><code class="cpp preprocessor">#define c_RightEncoderPinA 18</code></div><div class="line number23 index22 alt2"><code class="cpp preprocessor">#define c_RightEncoderPinB 24</code></div><div class="line number24 index23 alt1"><code class="cpp keyword bold">volatile</code> <code class="cpp color1 bold">bool</code> <code class="cpp plain">_RightEncoderBSet;</code></div><div class="line number25 index24 alt2"><code class="cpp keyword bold">volatile</code> <code class="cpp color1 bold">long</code> <code class="cpp plain">_RightEncoderTicks = 0;</code></div><div class="line number26 index25 alt1">&nbsp;</div><div class="line number27 index26 alt2"><code class="cpp plain">Servo _RightServo;&nbsp; </code><code class="cpp comments">// create servo object to control right motor</code></div><div class="line number28 index27 alt1"><code class="cpp plain">Servo _LeftServo;&nbsp; </code><code class="cpp comments">// create servo object to control left motor</code></div><div class="line number29 index28 alt2">&nbsp;</div><div class="line number30 index29 alt1"><code class="cpp color1 bold">int</code> <code class="cpp plain">potpin = 0;&nbsp; </code><code class="cpp comments">// analog pin used to connect the potentiometer</code></div><div class="line number31 index30 alt2"><code class="cpp color1 bold">int</code> <code class="cpp plain">val;&nbsp;&nbsp;&nbsp; </code><code class="cpp comments">// variable to read the value from the analog pin</code></div><div class="line number32 index31 alt1">&nbsp;</div><div class="line number33 index32 alt2"><code class="cpp keyword bold">void</code> <code class="cpp plain">setup()</code></div><div class="line number34 index33 alt1"><code class="cpp plain">{</code></div><div class="line number35 index34 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">Serial.begin(115200);</code></div><div class="line number36 index35 alt1">&nbsp;</div><div class="line number37 index36 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">_RightServo.attach(2);&nbsp; </code><code class="cpp comments">// attaches the servo on specified pin to the servo object</code></div><div class="line number38 index37 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">_LeftServo.attach(3);&nbsp; </code><code class="cpp comments">// attaches the servo on specified pin to the servo object</code></div><div class="line number39 index38 alt2">&nbsp;</div><div class="line number40 index39 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp comments">// Quadrature encoders</code></div><div class="line number41 index40 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp comments">// Left encoder</code></div><div class="line number42 index41 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">pinMode(c_LeftEncoderPinA, INPUT);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="cpp comments">// sets pin A as input</code></div><div class="line number43 index42 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">digitalWrite(c_LeftEncoderPinA, LOW);&nbsp; </code><code class="cpp comments">// turn on pullup resistors</code></div><div class="line number44 index43 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">pinMode(c_LeftEncoderPinB, INPUT);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="cpp comments">// sets pin B as input</code></div><div class="line number45 index44 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">digitalWrite(c_LeftEncoderPinB, LOW);&nbsp; </code><code class="cpp comments">// turn on pullup resistors</code></div><div class="line number46 index45 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">attachInterrupt(c_LeftEncoderInterrupt, HandleLeftMotorInterruptA, RISING);</code></div><div class="line number47 index46 alt2">&nbsp;</div><div class="line number48 index47 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp comments">// Right encoder</code></div><div class="line number49 index48 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">pinMode(c_RightEncoderPinA, INPUT);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="cpp comments">// sets pin A as input</code></div><div class="line number50 index49 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">digitalWrite(c_RightEncoderPinA, LOW);&nbsp; </code><code class="cpp comments">// turn on pullup resistors</code></div><div class="line number51 index50 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">pinMode(c_RightEncoderPinB, INPUT);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="cpp comments">// sets pin B as input</code></div><div class="line number52 index51 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">digitalWrite(c_RightEncoderPinB, LOW);&nbsp; </code><code class="cpp comments">// turn on pullup resistors</code></div><div class="line number53 index52 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">attachInterrupt(c_RightEncoderInterrupt, HandleRightMotorInterruptA, RISING);</code></div><div class="line number54 index53 alt1"><code class="cpp plain">}</code></div><div class="line number55 index54 alt2">&nbsp;</div><div class="line number56 index55 alt1"><code class="cpp keyword bold">void</code> <code class="cpp plain">loop()</code></div><div class="line number57 index56 alt2"><code class="cpp plain">{</code></div><div class="line number58 index57 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">val = analogRead(potpin);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="cpp comments">// reads the value of the potentiometer (value between 0 and 1023)</code></div><div class="line number59 index58 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">val = map(val, 0, 1023, 0, 179);&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="cpp comments">// scale it to use it with the servo (value between 0 and 180)</code></div><div class="line number60 index59 alt1">&nbsp;</div><div class="line number61 index60 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">_RightServo.write(val);</code></div><div class="line number62 index61 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">_LeftServo.write(val);</code></div><div class="line number63 index62 alt2">&nbsp;</div><div class="line number64 index63 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">Serial.print(_LeftEncoderTicks);</code></div><div class="line number65 index64 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">Serial.print(</code><code class="cpp string">"\t"</code><code class="cpp plain">);</code></div><div class="line number66 index65 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">Serial.print(_RightEncoderTicks);</code></div><div class="line number67 index66 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">Serial.print(</code><code class="cpp string">"\n"</code><code class="cpp plain">);</code></div><div class="line number68 index67 alt1">&nbsp;</div><div class="line number69 index68 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">delay(20);</code></div><div class="line number70 index69 alt1"><code class="cpp plain">}</code></div><div class="line number71 index70 alt2">&nbsp;</div><div class="line number72 index71 alt1"><code class="cpp comments">// Interrupt service routines for the left motor's quadrature encoder</code></div><div class="line number73 index72 alt2"><code class="cpp keyword bold">void</code> <code class="cpp plain">HandleLeftMotorInterruptA()</code></div><div class="line number74 index73 alt1"><code class="cpp plain">{</code></div><div class="line number75 index74 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp comments">// Test transition; since the interrupt will only fire on 'rising' we don't need to read pin A</code></div><div class="line number76 index75 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">_LeftEncoderBSet = digitalReadFast(c_LeftEncoderPinB);&nbsp;&nbsp; </code><code class="cpp comments">// read the input pin</code></div><div class="line number77 index76 alt2">&nbsp;</div><div class="line number78 index77 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp comments">// and adjust counter + if A leads B</code></div><div class="line number79 index78 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp preprocessor">#ifdef LeftEncoderIsReversed</code></div><div class="line number80 index79 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">_LeftEncoderTicks -= _LeftEncoderBSet ? -1 : +1;</code></div><div class="line number81 index80 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp preprocessor">#else</code></div><div class="line number82 index81 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">_LeftEncoderTicks += _LeftEncoderBSet ? -1 : +1;</code></div><div class="line number83 index82 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp preprocessor">#endif</code></div><div class="line number84 index83 alt1"><code class="cpp plain">}</code></div><div class="line number85 index84 alt2">&nbsp;</div><div class="line number86 index85 alt1"><code class="cpp comments">// Interrupt service routines for the right motor's quadrature encoder</code></div><div class="line number87 index86 alt2"><code class="cpp keyword bold">void</code> <code class="cpp plain">HandleRightMotorInterruptA()</code></div><div class="line number88 index87 alt1"><code class="cpp plain">{</code></div><div class="line number89 index88 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp comments">// Test transition; since the interrupt will only fire on 'rising' we don't need to read pin A</code></div><div class="line number90 index89 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp plain">_RightEncoderBSet = digitalReadFast(c_RightEncoderPinB);&nbsp;&nbsp; </code><code class="cpp comments">// read the input pin</code></div><div class="line number91 index90 alt2">&nbsp;</div><div class="line number92 index91 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp comments">// and adjust counter + if A leads B</code></div><div class="line number93 index92 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp preprocessor">#ifdef RightEncoderIsReversed</code></div><div class="line number94 index93 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">_RightEncoderTicks -= _RightEncoderBSet ? -1 : +1;</code></div><div class="line number95 index94 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp preprocessor">#else</code></div><div class="line number96 index95 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">_RightEncoderTicks += _RightEncoderBSet ? -1 : +1;</code></div><div class="line number97 index96 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code><code class="cpp preprocessor">#endif</code></div><div class="line number98 index97 alt1"><code class="cpp plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p>Hopefully the code is fairly self explanatory. Since fast reads require that the pins are known at compile time I could no longer use my QuadratureEncoder class. Instead the code for calculating the encoder ticks is now part of the sketch itself and there is a little bit of duplicated code in the two interrupt handlers. For testing I used a 10k potentiometer at analog pin 0. The analog value is used to set the output of two servos that drive a <a href="http://www.robotmarketplace.com/products/0-SABER2X10-RC.html">Sabertooth 10 RC Dual Motor Speed Controller</a>. This allowed me to put the motors through their paces and verify that the encoder ticks are correctly caught.</p>
+			</div><!--/entry -->
+		</div><!-- .entry-container -->
+<footer class="post-footer postdata fix">
+<span class="author"><span class="icon">&nbsp;</span>Posted by <span class="vcard"><a href="http://www.hessmer.org/blog/author/admin/" class="url fn" rel="author">Dr Rainer Hessmer</a></span> at 4:02 pm</span>		<span class="tags tax"><span class="icon">&nbsp;</span>Tagged with: <a href="http://www.hessmer.org/blog/tag/arduino/" rel="tag">Arduino</a>, <a href="http://www.hessmer.org/blog/tag/robotics/" rel="tag">Robotics</a></span>
+	</footer><!-- .post-footer -->
+<section id="comments">
+<h3 class="comments"><span class="icon">&nbsp;</span>
+	29 Responses to “Quadrature Encoder too Fast for Arduino (with Solution)”</h3>
+<ol class="commentlist">
+	<li id="comment-100" class="comment byuser comment-author-admin bypostauthor even thread-even depth-1 plain-nested">
+				<div id="div-comment-100" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn"><a href="http://www.billporter.info/" rel="external nofollow" class="url">Bill Porter</a></cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-100">
+				January 31, 2011 at 5:18 pm</a>				</div>
+
+			</div>
+	
+			<p>Hi Dr. Hessmer,</p>
+<p>Nice post, and thanks for the link. I also built an Arduino powered motor-controller a while ago with high resolution encoders and ran into the same problem. I did not document it as well as you did, but I did post my code.</p>
+<p><a href="http://www.billporter.info/s-a-g-a-r-s-smart-motor-controller/" rel="nofollow">http://www.billporter.info/s-a-g-a-r-s-smart-motor-controller/</a></p>
+<p>and rebuilt it later</p>
+<p><a href="http://www.billporter.info/sagar-update-new-motor-controller-and-motors/" rel="nofollow">http://www.billporter.info/sagar-update-new-motor-controller-and-motors/</a></p>
+<p>It was before I found the easy to use digitalReadFast() so I used direct port access.</p>
+<p>I’m curious, you are attaching the interrupt for RISING only, but you still check the same pin (channel A, the one that triggered the interrupt ) anyway in your interrupt routine. Would it not be faster to assume the pin is HIGH since the interrupt is fired on the rising edge?</p>
+<p>Also, there’s another optimization you can make. Since ‘c_RightEncoderIsReversed’ is defined at compile time, you could change the ‘if(c_RightEncoderIsReversed)’ statements to pre-processor directives. Something like #ifdef RightEncoderIsReversed …. #else …. #endif</p>
+<p>This lets the pre-processor make the decision which set of code to compile for your sketch, instead the actual microprocessor running machine code to check a constant value EVERY time the interrupt fires. Should save a few cycles on every interrupt, and shrink your code size down a few bytes.</p>
+<p>Bill</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=100#respond" onclick="return addComment.moveForm( &quot;comment-100&quot;, &quot;100&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Bill Porter">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-101" class="comment byuser comment-author-admin bypostauthor odd alt thread-odd thread-alt depth-1 plain-nested">
+				<div id="div-comment-101" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn"><a href="http://hessmer.org/" rel="external nofollow" class="url">Dr Rainer Hessmer</a></cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-101">
+				February 1, 2011 at 7:17 pm</a>				</div>
+
+			</div>
+	
+			<p>Bill,</p>
+<p>Thank you very much for your feedback! I already incorporated your suggestions and updated the blog entry.</p>
+<p>Rainer</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=101#respond" onclick="return addComment.moveForm( &quot;comment-101&quot;, &quot;101&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Dr Rainer Hessmer">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-102" class="comment byuser comment-author-admin bypostauthor even thread-even depth-1 plain-nested">
+				<div id="div-comment-102" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn"><a href="http://www.billporter.info/" rel="external nofollow" class="url">Bill Porter</a></cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-102">
+				February 1, 2011 at 7:58 pm</a>				</div>
+
+			</div>
+	
+			<p>No problem, glad I could help.</p>
+<p>A self balancing platform looks like a fun challenge to tackle. I might have to add it to my list of future projects.</p>
+<p>Bill</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=102#respond" onclick="return addComment.moveForm( &quot;comment-102&quot;, &quot;102&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Bill Porter">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-103" class="comment byuser comment-author-admin bypostauthor odd alt thread-odd thread-alt depth-1 plain-nested">
+				<div id="div-comment-103" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">Mayur Patel</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-103">
+				February 14, 2011 at 12:21 pm</a>				</div>
+
+			</div>
+	
+			<p>Dr Hessmer,</p>
+<p>First of all I must thank you for the help your blog has given me with ROS and Arduino. I’m also having the same problem with the wheel encoders and I understand your code apart from one small thing. My encoders have a channel A and channel B out. I see in your code you give these two pin assignments, what I don’t understand is what is attached to the interrupt. A response would be greatly appreciated.</p>
+<p>Mayur</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=103#respond" onclick="return addComment.moveForm( &quot;comment-103&quot;, &quot;103&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Mayur Patel">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-104" class="comment byuser comment-author-admin bypostauthor even thread-even depth-1 plain-nested">
+				<div id="div-comment-104" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn"><a href="http://hessmer.org/" rel="external nofollow" class="url">Dr Rainer Hessmer</a></cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-104">
+				February 14, 2011 at 6:28 pm</a>				</div>
+
+			</div>
+	
+			<p>Hi Mayur,</p>
+<p>The tricky part is that by attaching to an interrupt you implicitly also specify an input pin. The correlation between interrupt number and input pin depends on the type of Arduino board you use. For the Arduino Mega the information is listed on the page <a href="http://arduino.cc/en/Main/ArduinoBoardMega" rel="nofollow">http://arduino.cc/en/Main/ArduinoBoardMega</a>.</p>
+<p>In my code I use interrupt 4 which uses pin 19 for the first encoder and interrupt 5 (pin 18) for the second. For simplicity, in the following I only discuss the first encoder (interrupt 4). The second encoder works identically but obviously with different pins.</p>
+<p>In order to determine the quadrature encoder transitions I need to know the values for channel A and channel B. Channel A is hooked up to pin 19; channel B to pin 25. I configure interrupt 4 (which acts on pin 19 / channel A) so that it only fires on ‘rising’; i.e., only when the value on pin 19 changes from low to high. So in the interrupt handler I don’t need to read the value of pin 19 (channel A); I already know that it is high. I only need to read channel B (pin 25) and, based on its value, increment / decrement the ticks. Bill Porter suggested this nifty optimization to me (see the first comment for this post).</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=104#respond" onclick="return addComment.moveForm( &quot;comment-104&quot;, &quot;104&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Dr Rainer Hessmer">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-105" class="comment byuser comment-author-admin bypostauthor odd alt thread-odd thread-alt depth-1 plain-nested">
+				<div id="div-comment-105" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">Mayur Patel</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-105">
+				February 14, 2011 at 7:09 pm</a>				</div>
+
+			</div>
+	
+			<p>Dr. Hessmer,</p>
+<p>Yes I see, I was just being stupid. I forgot that interrupt 4 = pin 19 haha. I normally don’t use or prefer the Arduino.</p>
+<p>Thank you for your help,<br>
+Mayur</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=105#respond" onclick="return addComment.moveForm( &quot;comment-105&quot;, &quot;105&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Mayur Patel">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-106" class="comment byuser comment-author-admin bypostauthor even thread-even depth-1 plain-nested">
+				<div id="div-comment-106" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">Adam Walters</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-106">
+				April 19, 2011 at 10:59 pm</a>				</div>
+
+			</div>
+	
+			<p>Great sample – just what I was looking for to get my robot up and running. Some questions though:<br>
+What’s the reference to Pin26 in the setup routine? It also looks like c_RightEncoderPinA gets initialized twice and c_RightEncoderPinB never gets set to be an input:</p>
+<p>// Right encoder<br>
+pinMode(c_RightEncoderPinA, INPUT); // sets pin A as input<br>
+digitalWrite(c_RightEncoderPinA, LOW); // turn on pullup resistors<br>
+pinMode(c_RightEncoderPinA, INPUT); // sets pin A as input<br>
+digitalWrite(26, LOW); // turn on pullup resistors<br>
+pinMode(26, INPUT); // sets pin B as input<br>
+digitalWrite(c_RightEncoderPinB, LOW); // turn on pullup resistors</p>
+<p>I assumed this was a typo so I corrected the code and re-ran it. In either case, I get the pulse count I expect, but it doesn’t respect the motor direction. I checked the quadrature signals and they were as expected. If I output the sampled pin value from the interrupt routine, via a digitalWriteFast() call, it stays high all the time. It looks like I’ll have to settle for the pulse count and determine the direction from the motor controller outputs. Any suggestions where I’m going wrong?</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=106#respond" onclick="return addComment.moveForm( &quot;comment-106&quot;, &quot;106&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Adam Walters">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-107" class="comment byuser comment-author-admin bypostauthor odd alt thread-odd thread-alt depth-1 plain-nested">
+				<div id="div-comment-107" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn"><a href="http://hessmer.org/" rel="external nofollow" class="url">Dr Rainer Hessmer</a></cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-107">
+				April 23, 2011 at 3:40 pm</a>				</div>
+
+			</div>
+	
+			<p>Sorry for the late response. Thanks for pointing out the typo. I will correct the post as soon as I can verify that the changed code works on my robot. I looked at the source code of the Arduino program that I actually run on my robot (see <a href="http://code.google.com/p/drh-robotics-ros/source/browse/trunk/Arduino/Robot/Robot.pde" rel="nofollow">http://code.google.com/p/drh-robotics-ros/source/browse/trunk/Arduino/Robot/Robot.pde</a>). It contains the same typo but it certainly works. I correctly get the speed and the direction from the encoders. You wrote that you checked the output via a digitalWriteFast() call. I guess you meant digitalReadFast() instead of digitalWriteFast(), correct?</p>
+<p>UPDATE: I cleaned up the encoder sample code. The variables _LeftEncoderASet and _LeftEncoderBSet were not used and are removed now. Also the code in Setup() has been cleaned up.</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=107#respond" onclick="return addComment.moveForm( &quot;comment-107&quot;, &quot;107&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Dr Rainer Hessmer">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-108" class="comment byuser comment-author-admin bypostauthor even thread-even depth-1 plain-nested">
+				<div id="div-comment-108" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">Dimitris Manousos</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-108">
+				May 14, 2011 at 12:00 pm</a>				</div>
+
+			</div>
+	
+			<p>Hello Dr Hessmer,<br>
+I would like to know what is the upper limit of the counts/rev in order to have a properly worked counting?<br>
+Can we calculate this limit. I think it would be helpful for those who want to have as much resolution as possible.</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=108#respond" onclick="return addComment.moveForm( &quot;comment-108&quot;, &quot;108&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Dimitris Manousos">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-109" class="comment byuser comment-author-admin bypostauthor odd alt thread-odd thread-alt depth-1 plain-nested">
+				<div id="div-comment-109" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn"><a href="http://hessmer.org/" rel="external nofollow" class="url">Dr Rainer Hessmer</a></cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-109">
+				May 16, 2011 at 9:39 pm</a>				</div>
+
+			</div>
+	
+			<p>It is difficult for me to give you an exact number since it depends heavily on how much else is running on the controller. In my case I seem to get accurate counts up to about 4000 ticks per second. This is based on the controller program I use on my robot. It includes three PI loops, odometry calculations, and quite a bit of serial communication. I know this is not a very satisfying answer but it provides at least a ballpark number.</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=109#respond" onclick="return addComment.moveForm( &quot;comment-109&quot;, &quot;109&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Dr Rainer Hessmer">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-110" class="comment byuser comment-author-admin bypostauthor even thread-even depth-1 plain-nested">
+				<div id="div-comment-110" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">Lukas Theisen</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-110">
+				June 20, 2011 at 8:14 am</a>				</div>
+
+			</div>
+	
+			<p>Hi.</p>
+<p>Nice code and well working. However by only interrupting on the rising edge and only on one of the two quadrature encoder signals, you will have reduced your resolution by a factor 4.</p>
+<p>I suggest using a board with at least 2 external interrupt signals for each quadrature encoder and then slightly rewrite the code, so that it interrupts on changes in the encoder signals.</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=110#respond" onclick="return addComment.moveForm( &quot;comment-110&quot;, &quot;110&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Lukas Theisen">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-111" class="comment byuser comment-author-admin bypostauthor odd alt thread-odd thread-alt depth-1 plain-nested">
+				<div id="div-comment-111" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn"><a href="http://hessmer.org/" rel="external nofollow" class="url">Dr Rainer Hessmer</a></cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-111">
+				June 20, 2011 at 10:01 pm</a>				</div>
+
+			</div>
+	
+			<p>Lukas, only using the rising edge is very much on purpose since in my case the resolution of the wheel encoders combined with the speed of the motor produces more transitions than the Arduino can handle. This is the whole point of the post. For low resolution encoders and/or lower rpms, using two interrupts per encoder and triggering on all transitions (not just rising) is of course the way to go. I covered this in an older post.</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=111#respond" onclick="return addComment.moveForm( &quot;comment-111&quot;, &quot;111&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Dr Rainer Hessmer">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-112" class="comment byuser comment-author-admin bypostauthor even thread-even depth-1 plain-nested">
+				<div id="div-comment-112" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">Lukas Theisen</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-112">
+				June 21, 2011 at 4:05 am</a>				</div>
+
+			</div>
+	
+			<p>@Dr Hessmer – sry my bad, and thanks for the help.</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=112#respond" onclick="return addComment.moveForm( &quot;comment-112&quot;, &quot;112&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Lukas Theisen">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-113" class="comment byuser comment-author-admin bypostauthor odd alt thread-odd thread-alt depth-1 plain-nested">
+				<div id="div-comment-113" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">JT</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-113">
+				August 7, 2011 at 5:25 pm</a>				</div>
+
+			</div>
+	
+			<p>How would I use this on the UNO with just 2 encoders ?</p>
+<p>I have tried to adapt this, but having 50% luck.. I can get the left one working but not the right one.</p>
+<p>Thank you for any help you could give.</p>
+<p>JT</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=113#respond" onclick="return addComment.moveForm( &quot;comment-113&quot;, &quot;113&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to JT">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-114" class="comment byuser comment-author-admin bypostauthor even thread-even depth-1 plain-nested">
+				<div id="div-comment-114" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">ksp</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-114">
+				October 17, 2011 at 10:43 am</a>				</div>
+
+			</div>
+	
+			<p>Hi I have the same problem as JT.</p>
+<p>I am using it on Mega but can never get both the encoder counts at the same time and if i do i get ridiculously low values.</p>
+<p>My encoder is 1856 CPR and the speed is roughly 1.5 Rev/sec. Is this too low for this to method work?</p>
+<p>Thanks in advance for your method and any help you could give me.</p>
+<p>ksp</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=114#respond" onclick="return addComment.moveForm( &quot;comment-114&quot;, &quot;114&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to ksp">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-115" class="comment byuser comment-author-admin bypostauthor odd alt thread-odd thread-alt depth-1 plain-nested">
+				<div id="div-comment-115" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">Rajan</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-115">
+				October 25, 2011 at 3:45 am</a>				</div>
+
+			</div>
+	
+			<p>Hey Dr. Hessmer,</p>
+<p>Thanks a lot for your tutorial. This greatly helped in my Balancing Project. Though I have a small problem. My code, as suggested by you, works well when directly accessing the port and reading the input value of Encoder B, while Encoder A is used as a triggering signal. But, when I try to apply this for two motors in parallel, Code starts to fail and gives erraneous values (velocity goes down with increasing voltage) which basically means that there is a delay in reading Encoder B input.</p>
+<p>Can you please suggest something?</p>
+<p>Following is my code:<br>
+——————————————————————-<br>
+#define DirectionPin 3 // direction pin</p>
+<p>int encoder0Pos = 0,oldPos = 0; // encoder position<br>
+int dir = 0;<br>
+unsigned long oldTime, newTime, dt;<br>
+float vel;</p>
+<p>void setup() {<br>
+Serial.begin(9600); // set up Serial library at 9600 bps<br>
+pinMode(DirectionPin, INPUT);</p>
+<p>// encoder pin on interrupt 0 (pin 2)<br>
+attachInterrupt(5, doEncoder, RISING);<br>
+oldTime = millis();<br>
+}</p>
+<p>void loop() {<br>
+newTime = millis(); // read the current time stamp<br>
+dt = newTime – oldTime; // compute delta time<br>
+oldTime = newTime;</p>
+<p>vel = (float) ((encoder0Pos – oldPos) * 4.25) / (dt); // velocity estimate in ms<br>
+int temp = encoder0Pos – oldPos;<br>
+oldPos = encoder0Pos;</p>
+<p>Serial.println(vel);<br>
+}</p>
+<p>// Interrupt routine<br>
+void doEncoder()<br>
+{<br>
+dir = (PINE &amp; 0b00100000) &gt;&gt; 5;<br>
+if (dir == HIGH) {encoder0Pos = encoder0Pos – 1;}<br>
+else {encoder0Pos = encoder0Pos + 1;}<br>
+}<br>
+———————————————————–</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=115#respond" onclick="return addComment.moveForm( &quot;comment-115&quot;, &quot;115&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Rajan">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-116" class="comment byuser comment-author-admin bypostauthor even thread-even depth-1 plain-nested">
+				<div id="div-comment-116" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">Rajan</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-116">
+				October 25, 2011 at 3:48 am</a>				</div>
+
+			</div>
+	
+			<p>By the way, forgot to mention, Interrupt frequency is around 12646 counts per sec per motor.</p>
+<p>(1024 Counts per Rotation and 741 Rotations per Minute (RPM))</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=116#respond" onclick="return addComment.moveForm( &quot;comment-116&quot;, &quot;116&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Rajan">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-117" class="comment byuser comment-author-admin bypostauthor odd alt thread-odd thread-alt depth-1 plain-nested">
+				<div id="div-comment-117" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">Bruno</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-117">
+				June 1, 2012 at 11:15 am</a>				</div>
+
+			</div>
+	
+			<p>Hi,<br>
+I had a problem with your code…My encoder works with 128 count/rev and trying to use your code, arduino only reads 32count/rev (1/4).<br>
+Have you some idea to help me?<br>
+I will wate your help at my e-mail…<br>
+Thanks!</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=117#respond" onclick="return addComment.moveForm( &quot;comment-117&quot;, &quot;117&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Bruno">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-118" class="comment byuser comment-author-admin bypostauthor even thread-even depth-1 plain-nested">
+				<div id="div-comment-118" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">gary</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-118">
+				June 18, 2012 at 4:26 pm</a>				</div>
+
+			</div>
+	
+			<p>Bruno, that’s right, the code is only listening to one of the 2 encoder outputs and only catching the rising edge of that so it is counting exactly 1/4th of the actual count. They made this shortcut because catching high speed pulses was more important to them than precision for this code and they weren’t concerned with direction, only that it is moving.</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=118#respond" onclick="return addComment.moveForm( &quot;comment-118&quot;, &quot;118&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to gary">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-119" class="comment byuser comment-author-admin bypostauthor odd alt thread-odd thread-alt depth-1 plain-nested">
+				<div id="div-comment-119" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">JN</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-119">
+				February 18, 2013 at 1:00 pm</a>				</div>
+
+			</div>
+	
+			<p>Thank you for the code snippet. It’s helping greatly. One question concerning your assumption for one of the encoders inputs already high, I have a 1024 step/Rev encoder I am using to determine to a fairly precise angular movement of a shaft. In the spec sheet they list three inputs, The interrupt and the two standard A,B type inputs. For CCW rotation the interrupt and the B input fire simultaneous. For CW rotation the B output seems to show a delay before the going active. I’m new to rotary encoders so maybe this is a known thing and used to detect a change of direction? Would you still need to sample the (A or B) even with the interrupt to properly decode this? Thanks in advance.</p>
+<p>Jim</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=119#respond" onclick="return addComment.moveForm( &quot;comment-119&quot;, &quot;119&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to JN">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-120" class="comment byuser comment-author-admin bypostauthor even thread-even depth-1 plain-nested">
+				<div id="div-comment-120" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">Cory</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-120">
+				March 26, 2013 at 7:49 am</a>				</div>
+
+			</div>
+	
+			<p>Thankyou very much for this.</p>
+<p>For those of you who want to count 1/2 the ticks instead of 1/4 because you need just a bit more precision here is a quick rewrite for you.</p>
+<p>Note this uses 4 interrupt pins, 18 and 19 are one encoder and 20 and 21 are the other.</p>
+<p>#include<br>
+#include // library for high performance reads and writes by jrraines<br>
+// see <a href="http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1267553811/0" rel="nofollow">http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1267553811/0</a><br>
+// and <a href="http://code.google.com/p/digitalwritefast/" rel="nofollow">http://code.google.com/p/digitalwritefast/</a></p>
+<p>// It turns out that the regular digitalRead() calls are too slow and bring the arduino down when<br>
+// I use them in the interrupt routines while the motor runs at full speed creating more than<br>
+// 40000 encoder ticks per second per motor.</p>
+<p>// Quadrature encoders<br>
+// Left encoder<br>
+#define c_LeftEncoderInterrupt 3<br>
+#define d_LeftEncoderInterrupt 2<br>
+#define c_LeftEncoderPinA 20<br>
+#define c_LeftEncoderPinB 21<br>
+#define LeftEncoderIsReversed<br>
+volatile bool _LeftEncoderBSet;<br>
+volatile long _LeftEncoderTicks = 0;</p>
+<p>// Right encoder<br>
+#define c_RightEncoderInterrupt 5<br>
+#define d_RightEncoderInterrupt 4<br>
+#define c_RightEncoderPinA 18<br>
+#define c_RightEncoderPinB 19<br>
+volatile bool _RightEncoderBSet;<br>
+volatile long _RightEncoderTicks = 0;</p>
+<p>void setup()<br>
+{<br>
+Serial.begin(115200);</p>
+<p>// Quadrature encoders<br>
+// Left encoder<br>
+pinMode(c_LeftEncoderPinA, INPUT); // sets pin A as input<br>
+digitalWrite(c_LeftEncoderPinA, LOW); // turn on pullup resistors<br>
+pinMode(c_LeftEncoderPinB, INPUT); // sets pin B as input<br>
+digitalWrite(c_LeftEncoderPinB, LOW); // turn on pullup resistors<br>
+attachInterrupt(c_LeftEncoderInterrupt, HandleLeftMotorInterruptA, RISING);<br>
+attachInterrupt(d_LeftEncoderInterrupt, HandleLeftMotorInterruptB, RISING);</p>
+<p>// Right encoder<br>
+pinMode(c_RightEncoderPinA, INPUT); // sets pin A as input<br>
+digitalWrite(c_RightEncoderPinA, LOW); // turn on pullup resistors<br>
+pinMode(c_RightEncoderPinB, INPUT); // sets pin B as input<br>
+digitalWrite(c_RightEncoderPinB, LOW); // turn on pullup resistors<br>
+attachInterrupt(c_RightEncoderInterrupt, HandleRightMotorInterruptA, RISING);<br>
+attachInterrupt(d_RightEncoderInterrupt, HandleRightMotorInterruptB, RISING);<br>
+}</p>
+<p>void loop()<br>
+{</p>
+<p>Serial.print(_LeftEncoderTicks);<br>
+Serial.print(“\t”);<br>
+Serial.print(_RightEncoderTicks);<br>
+Serial.print(“\n”);</p>
+<p>delay(20);<br>
+}</p>
+<p>// Interrupt service routines for the left motor’s quadrature encoder<br>
+void HandleLeftMotorInterruptA()<br>
+{<br>
+// Test transition; since the interrupt will only fire on ‘rising’ we don’t need to read pin A<br>
+_LeftEncoderBSet = digitalReadFast(c_LeftEncoderPinB); // read the input pin</p>
+<p>// and adjust counter + if A leads B<br>
+#ifdef LeftEncoderIsReversed<br>
+_LeftEncoderTicks -= _LeftEncoderBSet ? -1 : +1;<br>
+#else<br>
+_LeftEncoderTicks += _LeftEncoderBSet ? -1 : +1;<br>
+#endif<br>
+}</p>
+<p>// Interrupt service routines for the left motor’s quadrature encoder<br>
+void HandleLeftMotorInterruptB()<br>
+{<br>
+// Test transition; since the interrupt will only fire on ‘rising’ we don’t need to read pin A<br>
+_LeftEncoderBSet = digitalReadFast(c_LeftEncoderPinA); // read the input pin</p>
+<p>// and adjust counter + if A leads B<br>
+#ifdef LeftEncoderIsReversed<br>
+_LeftEncoderTicks += _LeftEncoderBSet ? -1 : +1;<br>
+#else<br>
+_LeftEncoderTicks -= _LeftEncoderBSet ? -1 : +1;<br>
+#endif<br>
+}</p>
+<p>// Interrupt service routines for the right motor’s quadrature encoder<br>
+void HandleRightMotorInterruptA()<br>
+{<br>
+// Test transition; since the interrupt will only fire on ‘rising’ we don’t need to read pin A<br>
+_RightEncoderBSet = digitalReadFast(c_RightEncoderPinB); // read the input pin</p>
+<p>// and adjust counter + if A leads B<br>
+#ifdef RightEncoderIsReversed<br>
+_RightEncoderTicks -= _RightEncoderBSet ? -1 : +1;<br>
+#else<br>
+_RightEncoderTicks += _RightEncoderBSet ? -1 : +1;<br>
+#endif<br>
+}</p>
+<p>// Interrupt service routines for the right motor’s quadrature encoder<br>
+void HandleRightMotorInterruptB()<br>
+{<br>
+// Test transition; since the interrupt will only fire on ‘rising’ we don’t need to read pin A<br>
+_RightEncoderBSet = digitalReadFast(c_RightEncoderPinA); // read the input pin</p>
+<p>// and adjust counter + if A leads B<br>
+#ifdef RightEncoderIsReversed<br>
+_RightEncoderTicks += _RightEncoderBSet ? -1 : +1;<br>
+#else<br>
+_RightEncoderTicks -= _RightEncoderBSet ? -1 : +1;<br>
+#endif<br>
+}</p>
+<p>On a side note to add all of the ticks, you have to add interrupts to the falling edge of the signals as well.</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=120#respond" onclick="return addComment.moveForm( &quot;comment-120&quot;, &quot;120&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Cory">Reply</a>			</div>
+
+
+
+		
+	<ul class="children">
+	<li id="comment-1558" class="comment odd alt depth-2 plain-nested">
+				<div id="div-comment-1558" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/eed2e96984d06ac4562654d311201110" srcset="http://2.gravatar.com/avatar/eed2e96984d06ac4562654d311201110?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">Chintan tandel</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-1558">
+				October 27, 2015 at 6:46 am</a>				</div>
+
+			</div>
+	
+			<p>just use CHANGE insted of RISING and you will get 2x resolution</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=1558#respond" onclick="return addComment.moveForm( &quot;comment-1558&quot;, &quot;1558&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Chintan tandel">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li id="comment-121" class="comment byuser comment-author-admin bypostauthor even thread-odd thread-alt depth-1 plain-nested">
+				<div id="div-comment-121" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">tego</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-121">
+				August 7, 2013 at 8:02 am</a>				</div>
+
+			</div>
+	
+			<p>How about ‘OR ing” the rising edges ; feeding it to one interrupt and reading the state ?<br>
+I don’t know this micro-processor but this would be half the interrupt service routine overhead for<br>
+the same amount of work ?</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=121#respond" onclick="return addComment.moveForm( &quot;comment-121&quot;, &quot;121&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to tego">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-122" class="comment byuser comment-author-admin bypostauthor odd alt thread-even depth-1 plain-nested">
+				<div id="div-comment-122" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">Ojano</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-122">
+				November 14, 2013 at 8:43 am</a>				</div>
+
+			</div>
+	
+			<p>Thank you, I’ve been searching for this solution quite some time..</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=122#respond" onclick="return addComment.moveForm( &quot;comment-122&quot;, &quot;122&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Ojano">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-123" class="comment byuser comment-author-admin bypostauthor even thread-odd thread-alt depth-1 plain-nested">
+				<div id="div-comment-123" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">allan</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-123">
+				November 18, 2013 at 10:43 am</a>				</div>
+
+			</div>
+	
+			<p>i want to use the rotary encoder to measure and display revolutions per minute. it has a resolution of 200p/r and has three outputs..can anyone help??</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=123#respond" onclick="return addComment.moveForm( &quot;comment-123&quot;, &quot;123&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to allan">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-463" class="comment odd alt thread-even depth-1 plain-nested">
+				<div id="div-comment-463" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/345b0b1bcbd2381bb7295f6bbe03de14" srcset="http://0.gravatar.com/avatar/345b0b1bcbd2381bb7295f6bbe03de14?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">Tim Jim</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-463">
+				July 18, 2015 at 10:29 am</a>				</div>
+
+			</div>
+	
+			<p>If you are using an Arduino Uno and having trouble determining direction I may have stumbled across the solution.  The Arduino Uno has two interrupts 0 (pin 2) and 1 (pin 3).  So if you use either pin 2 or 3 for your encoders you must comment out or change the following two lines:</p>
+<p>_RightServo.attach(2);  // attaches the servo on specified pin to the servo object<br>
+_LeftServo.attach(3);  // attaches the servo on specified pin to the servo object</p>
+<p>After commenting out these two lines, I was able to determine direction with the encoder.</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=463#respond" onclick="return addComment.moveForm( &quot;comment-463&quot;, &quot;463&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Tim Jim">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+	<li id="comment-464" class="comment even thread-odd thread-alt depth-1 plain-nested">
+				<div id="div-comment-464" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/345b0b1bcbd2381bb7295f6bbe03de14" srcset="http://0.gravatar.com/avatar/345b0b1bcbd2381bb7295f6bbe03de14?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">Tim Jim</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-464">
+				July 18, 2015 at 10:30 am</a>				</div>
+
+			</div>
+	
+			<p>If you are using an Arduino Uno and having trouble determining direction I may have stumbled across the solution.  The Arduino Uno has two interrupts 0 (pin 2) and 1 (pin 3).  So if you use either pin 2 or 3 for your encoders you must comment out or change the following two line:</p>
+<p>_RightServo.attach(2);  // attaches the servo on specified pin to the servo object<br>
+_LeftServo.attach(3);  // attaches the servo on specified pin to the servo object</p>
+<p>After commenting out these two lines, I was able to determine direction with the encoder.</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=464#respond" onclick="return addComment.moveForm( &quot;comment-464&quot;, &quot;464&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Tim Jim">Reply</a>			</div>
+
+
+
+		
+	<ul class="children">
+	<li id="comment-740" class="comment byuser comment-author-admin bypostauthor odd alt depth-2 plain-nested">
+				<div id="div-comment-740" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/ab694f5cc90dbd95f10e076f86eb5897" srcset="http://1.gravatar.com/avatar/ab694f5cc90dbd95f10e076f86eb5897?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn"><a href="http://hessmer.org/" rel="external nofollow" class="url">Dr Rainer Hessmer</a></cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-740">
+				August 7, 2015 at 8:26 pm</a>				</div>
+
+			</div>
+	
+			<p>Sorry, Tim. I overlooked your comment in the ‘approve’ queue.</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=740#respond" onclick="return addComment.moveForm( &quot;comment-740&quot;, &quot;740&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Dr Rainer Hessmer">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li id="comment-1971" class="comment even thread-even depth-1 plain-nested">
+				<div id="div-comment-1971" class="comment-body">
+			<div class="comment-author fix vcard">
+			<img alt="" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/604a2592fdc946151a05706ed0d9978f" srcset="http://0.gravatar.com/avatar/604a2592fdc946151a05706ed0d9978f?s=96&amp;d=mm&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48">				<div class="comment-author-link">
+					<cite class="fn">Regor</cite> <span class="says">says:</span>				</div>
+				<div class="comment-meta commentmetadata"><a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-1971">
+				December 3, 2015 at 6:04 pm</a>				</div>
+
+			</div>
+	
+			<p>Thank you for the great tutorial!</p>
+<p>I know this is an old article but here you said that you could measure “40000 encoder ticks per second per motor”.<br>
+As soon as I start going above a low RPM, the ticks begin to read negative!<br>
+What sort of a filter circuit are you using? Just pull down resistors? Using a Mega?<br>
+I am using a Mega with this filter circuit- pull down resistors do not work: <a href="https://ccrma.stanford.edu/workshops/pid2004/sensors/encoder_filter.png" rel="nofollow">https://ccrma.stanford.edu/workshops/pid2004/sensors/encoder_filter.png</a></p>
+<p>Any help at all would be greatly appreciated!</p>
+
+			</div>
+
+			<div class="reply">
+			<a rel="nofollow" class="comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/?replytocom=1971#respond" onclick="return addComment.moveForm( &quot;comment-1971&quot;, &quot;1971&quot;, &quot;respond&quot;, &quot;68&quot; )" aria-label="Reply to Regor">Reply</a>			</div>
+
+
+
+		
+	</li><!-- #comment-## -->
+</ol>
+<div class="navigation fix">
+	<div class="alignleft"></div>
+	<div class="alignright"></div>
+</div>
+						<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title"><span class="icon">&nbsp;</span>Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://www.hessmer.org/blog/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																			<span></span>							
+					<p>
+						<label for="author" class="suf-comment-label">Name</label>
+						<input type="text" name="author" id="author" class="textarea" value="" size="28" tabindex="1"> (required)
+					</p>
+
+					<p>
+						<label for="email" class="suf-comment-label">E-mail</label>
+						<input type="text" name="email" id="email" value="" size="28" tabindex="2" class="textarea"> (required)
+					</p>
+
+					<p>
+						<label for="url" class="suf-comment-label">URI</label>
+						<input type="text" name="url" id="url" value="" size="28" tabindex="3" class="textarea">
+					</p>
+												
+					<p>
+						<label for="comment" class="textarea suf-comment-label">Your Comment</label>
+						<textarea name="comment" id="comment" cols="60" rows="10" tabindex="4" class="textarea"></textarea>
+					</p>						<p class="form-allowed-tags">You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes: <code>&lt;a href="" title=""&gt; &lt;abbr title=""&gt; &lt;acronym title=""&gt; &lt;b&gt; &lt;blockquote cite=""&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=""&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=""&gt; &lt;s&gt; &lt;strike&gt; &lt;strong&gt; </code></p>
+						<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Submit Comment"> <input type="hidden" name="comment_post_ID" value="68" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="8ca9a6997e"></p><p style="display: none;"></p>					<input type="hidden" id="ak_js" name="ak_js" value="1450002225799"></form>
+							</div><!-- #respond -->
+			</section>   <!-- #comments -->	</article><!--/post -->
+<nav class="post-nav fix">
+<table>
+<tbody><tr>
+	<td class="previous"><a href="http://www.hessmer.org/blog/2010/11/21/sending-data-from-arduino-to-ros/" rel="prev"><span class="icon">&nbsp;</span> Sending Data from Arduino to ROS</a></td>
+	<td class="next"><a href="http://www.hessmer.org/blog/2011/03/10/ardros-controller-and-drive-system/" rel="next"><span class="icon">&nbsp;</span> Ardros – Controller and Drive System</a></td>
+</tr>
+</tbody></table>
+</nav>
+      </div><!-- content -->
+    </div><!-- main col -->
+<div id="sidebar-shell-1" class="sidebar-shell sidebar-shell-right">
+<div class="dbx-group right boxed warea" id="sidebar">
+<!--widget start --><aside id="search-2" class="dbx-box suf-widget search"><div class="dbx-content">
+<form method="get" class="searchform " action="http://www.hessmer.org/blog/">
+	<input type="text" name="s" class="searchfield" value="Search" onfocus="if (this.value == &#39;Search&#39;) {this.value = &#39;&#39;;}" onblur="if (this.value == &#39;&#39;) {this.value = &#39;Search&#39;;}">
+	<input type="submit" class="searchsubmit" value="" name="searchsubmit">
+</form>
+</div></aside><!--widget end -->		<!--widget start --><aside id="recent-posts-2" class="dbx-box suf-widget widget_recent_entries"><h3 class="dbx-handle plain">Recent Posts</h3><div class="dbx-content">				<ul>
+					<li>
+				<a href="http://www.hessmer.org/blog/2015/07/13/online-involute-spur-gear-builder-part-2/">Online Involute Spur Gear Builder – Part 2</a>
+						</li>
+					<li>
+				<a href="http://www.hessmer.org/blog/2014/01/11/arduino-compatible-iic-i2c-serial-2-5-lcd-1602-display-module/">Arduino Compatible IIC / I2C Serial 2.5″ LCD 1602 Display Module</a>
+						</li>
+					<li>
+				<a href="http://www.hessmer.org/blog/2014/01/01/online-involute-spur-gear-builder/">Online Involute Spur Gear Builder</a>
+						</li>
+					<li>
+				<a href="http://www.hessmer.org/blog/2013/12/29/online-cycloidal-gear-builder/">Online Cycloidal Gear Builder</a>
+						</li>
+					<li>
+				<a href="http://www.hessmer.org/blog/2013/12/28/ibt-2-h-bridge-with-arduino/">IBT-2 H-Bridge with Arduino</a>
+						</li>
+				</ul>
+		</div></aside><!--widget end --><!--widget start --><aside id="recent-comments-2" class="dbx-box suf-widget widget_recent_comments"><h3 class="dbx-handle plain">Recent Comments</h3><div class="dbx-content"><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link">Vasil</span> on <a href="http://www.hessmer.org/blog/2014/01/01/online-involute-spur-gear-builder/#comment-1994">Online Involute Spur Gear Builder</a></li><li class="recentcomments"><span class="comment-author-link">Regor</span> on <a href="http://www.hessmer.org/blog/2011/01/30/quadrature-encoder-too-fast-for-arduino-with-solution/#comment-1971">Quadrature Encoder too Fast for Arduino (with Solution)</a></li><li class="recentcomments"><span class="comment-author-link"><a href="http://hessmer.org/" rel="external nofollow" class="url">Dr Rainer Hessmer</a></span> on <a href="http://www.hessmer.org/blog/2014/01/01/online-involute-spur-gear-builder/#comment-1970">Online Involute Spur Gear Builder</a></li><li class="recentcomments"><span class="comment-author-link">Patrick Brinton</span> on <a href="http://www.hessmer.org/blog/2014/01/01/online-involute-spur-gear-builder/#comment-1967">Online Involute Spur Gear Builder</a></li><li class="recentcomments"><span class="comment-author-link">Swante</span> on <a href="http://www.hessmer.org/blog/2013/12/28/ibt-2-h-bridge-with-arduino/#comment-1711">IBT-2 H-Bridge with Arduino</a></li></ul></div></aside><!--widget end --><!--widget start --><aside id="archives-2" class="dbx-box suf-widget widget_archive"><h3 class="dbx-handle plain">Archives</h3><div class="dbx-content">		<ul>
+	<li><a href="http://www.hessmer.org/blog/2015/07/">July 2015</a></li>
+	<li><a href="http://www.hessmer.org/blog/2014/01/">January 2014</a></li>
+	<li><a href="http://www.hessmer.org/blog/2013/12/">December 2013</a></li>
+	<li><a href="http://www.hessmer.org/blog/2012/02/">February 2012</a></li>
+	<li><a href="http://www.hessmer.org/blog/2012/01/">January 2012</a></li>
+	<li><a href="http://www.hessmer.org/blog/2011/06/">June 2011</a></li>
+	<li><a href="http://www.hessmer.org/blog/2011/05/">May 2011</a></li>
+	<li><a href="http://www.hessmer.org/blog/2011/04/">April 2011</a></li>
+	<li><a href="http://www.hessmer.org/blog/2011/03/">March 2011</a></li>
+	<li><a href="http://www.hessmer.org/blog/2011/02/">February 2011</a></li>
+	<li><a href="http://www.hessmer.org/blog/2011/01/">January 2011</a></li>
+	<li><a href="http://www.hessmer.org/blog/2010/11/">November 2010</a></li>
+	<li><a href="http://www.hessmer.org/blog/2010/08/">August 2010</a></li>
+	<li><a href="http://www.hessmer.org/blog/2010/07/">July 2010</a></li>
+	<li><a href="http://www.hessmer.org/blog/2010/04/">April 2010</a></li>
+	<li><a href="http://www.hessmer.org/blog/2010/01/">January 2010</a></li>
+		</ul>
+</div></aside><!--widget end --><!--widget start --><aside id="categories-2" class="dbx-box suf-widget widget_categories"><h3 class="dbx-handle plain">Categories</h3><div class="dbx-content">		<ul>
+	<li class="cat-item cat-item-14"><a href="http://www.hessmer.org/blog/category/horology/">Horology</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://www.hessmer.org/blog/category/robotics/">Robotics</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="http://www.hessmer.org/blog/category/uncategorized/">Uncategorized</a>
+</li>
+		</ul>
+</div></aside><!--widget end --><!--widget start --><aside id="meta-2" class="dbx-box suf-widget widget_meta"><h3 class="dbx-handle plain">Meta</h3><div class="dbx-content">			<ul>
+						<li><a href="http://www.hessmer.org/blog/wp-login.php">Log in</a></li>
+			<li><a href="http://www.hessmer.org/blog/feed/">Entries <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://www.hessmer.org/blog/comments/feed/">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+<li><a href="https://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.org</a></li>			</ul>
+</div></aside><!--widget end --></div><!--/sidebar -->
+</div>
+	</div><!-- /container -->
+
+<footer>
+	<div id="cred">
+		<table>
+			<tbody><tr>
+				<td class="cred-left">© 2015 <a href="http://www.hessmer.org/blog">Dr Rainer Hessmer</a></td>
+				<td class="cred-center"></td>
+				<td class="cred-right"><a href="http://aquoid.com/news/themes/suffusion/">Suffusion theme by Sayontan Sinha</a></td>
+			</tr>
+		</tbody></table>
+	</div>
+</footer>
+<!-- 44 queries, 10MB in 0.433 seconds. -->
+</div><!--/wrapper -->
+<!-- location footer -->
+<script type="text/javascript" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/form.js"></script>
+<script type="text/javascript" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/shCore.js"></script>
+<script type="text/javascript" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/shBrushCpp.js"></script>
+<script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://www.hessmer.org/blog/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "http://www.hessmer.org/blog/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+</script>
+<script type="text/javascript" src="./Quadrature Encoder too Fast for Arduino (with Solution) » Dr Rainer Hessmer_files/comment-reply.min.js"></script>
+
+
+
+</body></html>

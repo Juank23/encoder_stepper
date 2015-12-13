@@ -1,0 +1,36 @@
+Partlist
+
+Exported from encoder_step2.brd at 01.12.2015 13:00:15
+
+EAGLE Version 6.1.0 Copyright (c) 1988-2012 CadSoft
+
+Assembly variant: 
+
+Part     Value          Package          Library             Position (mm)         Orientation
+
+C1       10n            0805             SparkFun-Capacitors (19.43 11.51)         R180
+C2       10n            0805             SparkFun-Capacitors (19.43 6.73)          R180
+C3       100uF          153CLV-0605      adafruit            (59.38 24.13)         R180
+C4       10uF           EIA3216          SparkFun            (25.31 10.37)         R90
+C5       0.1uF          0805             SparkFun            (29.05 9.35)          R0
+C6       47uF           PANASONIC_D      SparkFun            (59.38 15.24)         R180
+C7       0.1uF          0805             SparkFun            (29.05 11.89)         R180
+C8       0.1uF          0805             SparkFun            (36.14 19.04)         R270
+IC3      LM1117         SOT223-ALT1      Testing             (59.38 6.35)          R270
+JP1      ISP            2X3              SparkFun            (34.92 3.8)           R90
+JP3                     2X03             pinhead             (31.3785 27.385)      R0
+LED2     Green          LED-1206-NO_SILK SparkFun-LED        (40.1555 3.8735)      R180
+Q1       RESONATORSMD   RESONATOR-SMD    SparkFun            (22.76 16.76)         R90
+R1       10k            0805             SparkFun-Passives   (19.43 24.29)         R0
+R2       10k            0805             SparkFun-Passives   (19.43 21.75)         R180
+R3       10k            0805             SparkFun-Passives   (19.37 4.43)          R0
+R4       10k            0805             SparkFun-Passives   (19.43 8.97)          R0
+R5       2.2k           0805             SparkFun            (44.41 3.8735)        R0
+R6       10K            0805             SparkFun            (36.16 15.25)         R90
+R7       10k            0805             SparkFun-Passives   (38.33 27.94)         R180
+R14      715            0805             SparkFun            (48.0295 3.8735)      R0
+R15      240            0805             SparkFun            (51.5855 3.8735)      R0
+U$5      A4988BREAKOUT  A4988BREAKOUT    RepRapjr            (50.76 23.495)        R270
+U1       ATMEGA328      TQFP32-08        SparkFun            (29.59 18.51)         R0
+X1                      W237-6           con-wago-500        (76.367 15.9495)      R270
+X2                      W237-6           con-wago-500        (9.6275 15.813)       R90
